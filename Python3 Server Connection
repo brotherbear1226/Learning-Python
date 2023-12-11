@@ -1,0 +1,35 @@
+
+import socket
+import sys
+
+#function: socket out of the socket library
+#action: creates an internet type socket, that is set to communicate over a tcp/ip network and using TCP as the protocol. 
+s = socket.socket()
+print ("Socket successfully created")
+port = 12345
+offset_start = 0x1BE
+offset_end = 0xCD
+number_of_bytes = offset_end - offset_start 
+
+with open("block.dd", "rb") as file:
+    file.seek(offset_start)
+    data = file.read(number_of_bytes)
+
+#function: Port Binding
+#action: binds the port
+s.bind(('', port)) #passed through an empty string so it will keep listening.
+print ('socket binded to %s' %(port))
+
+#function: turn socket into listening mode
+#action: listens for inbound connection over the port.
+s.listen(5) # can listen to 5 simultanious connections at a time.
+print ("socket is listening")
+
+#function: while loop
+#action: infinite loop until we end it or an error gets thrown
+while True:
+    c, addr = s.accept() # accepts incoming connnect. 
+    print('Got connection from', addr)
+    c.send('data incoming: '.encode())
+    c.close()
+    break
