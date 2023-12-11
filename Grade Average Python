@@ -1,0 +1,50 @@
+# function: calculate_average
+
+# purpose: To do the math to get the average of the grades. total number divided by the quanity
+
+# inputs: n/a
+
+# returns:  n/a
+
+def calculate_average(grades):
+    average = sum(grades) / len(grades)
+    return average
+
+# function: validate_grades
+
+# purpose: To make sure that the grades input is correct and not under 0 or over 100
+
+# inputs: n/a
+
+# returns:  n/a
+def validate_grades(grades):
+    for grade in grades:
+        if grade < 0 or grade > 100:
+            print(f"Warning: Invalid grade {grade}.")
+    return len(grades) > 0
+
+# function: get_grades
+
+# purpose: To prompt the user to input 6 grades
+
+# inputs: grades is the variable to store the input.
+
+# returns:  we then return a list of grades in an Integer and we have it set to 2 decimal points.
+
+def get_grades(prompt):
+    while True:
+        grades = input(prompt).split()
+        if validate_grades(list(map(int, grades))):
+            return list(map(int, grades))
+        else:
+            print("Please enter valid grades.")
+
+grades = get_grades("Enter 6 grades: ")
+if validate_grades(grades):
+    print(f"The average of the 6 grades is {calculate_average(grades):.2f}.")
+
+num_grades = int(input("Enter the number of grades you have: "))
+if num_grades > 0:
+    all_grades = get_grades(f"Enter {num_grades} grades: ")
+    if validate_grades(all_grades):
+        print(f"The average of all {num_grades} grades is {calculate_average(all_grades):.2f}.")
