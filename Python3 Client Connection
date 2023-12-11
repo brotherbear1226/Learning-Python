@@ -1,0 +1,51 @@
+
+import socket
+import sys
+
+#function: create a socket object
+#action: makes the socket for the client side
+s = socket.socket()
+#define the port
+port = 12345
+#connect to the server side
+s.connect(('127.0.0.1', port))
+#receive data from the server
+print (s.recv(1024).decode())
+
+#send data to server
+def read_partition_table():
+    # Open the block.dd file in binary mode
+    with open('block.dd', 'rb') as file:
+        # Seek to the start of the partition table entry (1BE)
+        file.seek(0x1BE)
+
+        # Read the status byte
+        status_byte = file.read(1)
+
+        # Skip 3 bytes
+        file.read(3)
+
+        # Read the partition type
+        partition_type = file.read(1)
+
+        # Skip 3 more bytes
+        file.read(3)
+
+        # Read the address of the first sector in the partition
+        first_sector_address = file.read(4)
+
+        # Convert bytes to integers
+        status_byte = int.from_bytes(status_byte, 'little')
+        partition_type = int.from_bytes(partition_type, 'little')
+        first_sector_address = int.from_bytes(first_sector_address, 'little')
+
+        # Print the parsed information
+        print(f"Status Byte: {status_byte}")
+        print(f"Partition Type: {partition_type}")
+        print(f"First Sector Address: {first_sector_address}")
+
+# Call the function to read and parse the partition table
+read_partition_table()
+
+#close connection
+s.close()
