@@ -1,0 +1,18 @@
+# This code will be for a food rating program. 
+
+#prompt the user for rating
+Q1 = float(input("How was your food? Please rate with how many stars: "))
+rating = Q1
+
+#If and elif statements to print out the rating based on the input which is stored in variable Q1.
+
+if rating > 4.5:
+  print('Extraordinary')
+elif rating > 4: 
+  print('Excellent')
+elif rating > 3:
+  print('Good')
+elif rating > 2: 
+  print('Fair')
+else: 
+  print('Poor')
